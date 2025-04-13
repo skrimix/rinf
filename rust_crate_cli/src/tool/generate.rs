@@ -383,7 +383,7 @@ fn visit_rust_files(dir: &Path, traced: &mut Traced) -> Result<(), SetupError> {
     if entry_path.is_dir() {
       // Recurse into subdirectory.
       visit_rust_files(&entry_path, traced)?;
-    } else {
+    } else if file_name.ends_with(".rs") {
       let content = read_to_string(&entry_path)?;
       let syntax_tree: File = syn::parse_file(&content)
         .map_err(|_| SetupError::CodeSyntax(file_name.to_owned()))?;
